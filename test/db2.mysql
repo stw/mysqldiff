@@ -1,0 +1,19 @@
+DROP TABLE IF EXISTS t2;
+CREATE TABLE t2 (
+    id int not null primary key auto_increment,
+    name varchar(255),
+    create_at datetime
+    );
+
+INSERT INTO t2 (id, name) VALUES (3, 'Lara');
+INSERT INTO t2 (id, name) VALUES (4, 'Frank');
+
+DROP TABLE IF EXISTS t3;
+CREATE TABLE t3 (
+    id int not null primary key auto_increment,
+    t2_id integer,
+    name varchar(255),
+    create_at datetime
+    );
+
+INSERT INTO t3 (name) VALUES ('Mike');

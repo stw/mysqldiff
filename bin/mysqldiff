@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+# 
+#  mysqldiff
+#  mysqldiff
+#  
+#  Created by Stephen Walker on 2010-03-09.
+#  Copyright 2010 WalkerTek Interactive Marketing. All rights reserved.
+# 
+
+require File.expand_path(
+      File.join(File.dirname(__FILE__), %w[.. lib mysqldiff]))
+
+
+db1 = ARGV[0] || {:host => 'localhost', :user => 'root', :password => '', :name => 'db1'}
+db2 = ARGV[1] || {:host => 'localhost', :user => 'root', :password => '', :name => 'db2'}
+
+if (db1.class.to_s != "Hash") 
+  db1 = {:name => db1}
+end
+
+if (db2.class.to_s != "Hash")
+  db2 = {:name => db2}
+end
+
+puts "-- Command mysqldiff"
+print "-- DB1 #{db1.class}: "
+p db1
+print "-- DB2 #{db2.class}: "
+p db2
+puts
+
+MySQLDiff.new(db1, db2)
