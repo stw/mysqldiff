@@ -5,7 +5,7 @@ CREATE TABLE t1 (
     create_at datetime
     );
 
-INSERT INTO t1 (name, create_at) VALUES ('Steve',now());
+INSERT INTO t1 (name, create_at) VALUES ('Steve\'s',now());
 INSERT INTO t1 (name, create_at) VALUES ('Mike',now());
 
 DROP TABLE IF EXISTS t2;

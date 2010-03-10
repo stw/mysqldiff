@@ -231,7 +231,7 @@ class MySQLDiff
         when /int/: 
           row[v[0]]
         else 
-          "'" + row[v[0]].to_s + "'"
+          "'" + @db1.escape_string(row[v[0]].to_s) + "'"
       end
     end
     values = values.join(',')     
