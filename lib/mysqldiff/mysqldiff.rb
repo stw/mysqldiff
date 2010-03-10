@@ -32,10 +32,12 @@ class MySQLDiff
     
     compare_schema
     
-    puts "use db1;\n\n"
+    puts "use db1;\n\n" if @db1_output != ""
     puts @db1_output
-    puts "use db2;\n\n"
+    puts "use db2;\n\n" if @db2_output != ""
     puts @db2_output
+    
+    puts "-- Databases Synchronized." if ((@db1_output == "")&&(@db2_output == ""))
     puts "-- Done."
   end
   
