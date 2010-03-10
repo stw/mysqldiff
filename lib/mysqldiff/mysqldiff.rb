@@ -12,10 +12,14 @@ require 'mysql'
 class MySQLDiff
   
   def initialize(db1, db2)
-    @columns = {}
+    @columns    = {}
     @db1_output = ""
     @db2_output = ""
 
+    run(db1, db2)
+  end
+  
+  def run(db1, db2)
     date = Time.now
     puts "-- MySQL Diff created with mysqldiff - #{date}"
     puts "-- http://www.walkertek.com"
@@ -33,7 +37,6 @@ class MySQLDiff
     puts "use db2;\n\n"
     puts @db2_output
     puts "-- Done."
-    
   end
   
   # ========================================================
@@ -229,9 +232,9 @@ class MySQLDiff
       # TODO - stw - which other cases do we need to handle?
       case v[1]
         when /int/: 
-          row[v[0]]
+          row[v[0]] || 'NULL'
         else 
-          "'" + @db1.escape_string(row[v[0]].to_s) + "'"
+          (row[v[0]].nil? ? 'NULL' : "'" + @db1.escape_string(row[v[0]].to_s) + "'")
       end
     end
     values = values.join(',')     
@@ -244,15 +247,15 @@ class MySQLDiff
     cols = query(db, "DESCRIBE #{table}")
     
     output << "CREATE TABLE #{table} (\n"
-    cols.each do |c|
+    cols.each_with_index do |c, i|
+      output << ",\n" if i > 0
       output << "\t#{c[0]} #{c[1]}"
       output << " primary key" if c[3] == "PRI"
       output << " DEFAULT NULL" if c[2] == "YES"
       output << " DEFAULT #{c[4]}" if c[2] == "NO" && c[3] != "PRI"
       output << " #{c[5]}" if c[5] != ""
-      output << ",\n"
     end
-    output << ");\n\n"
+    output << "\n);\n\n"
 
     return cols
   end
