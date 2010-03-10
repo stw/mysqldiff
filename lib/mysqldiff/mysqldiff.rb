@@ -55,6 +55,7 @@ class MySQLDiff
       puts "Error code: #{e.errno}"
       puts "Error message: #{e.error}"
       puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")
+      exit
     end
   end
   
@@ -69,6 +70,7 @@ class MySQLDiff
       puts "Error code: #{e.errno}"
       puts "Error message: #{e.error}"
       puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")
+      exit
     end
   end
   
@@ -79,6 +81,7 @@ class MySQLDiff
       puts "Error code: #{e.errno}"
       puts "Error message: #{e.error}"
       puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")
+      exit
     end
   end
   
@@ -93,6 +96,7 @@ class MySQLDiff
       puts "Error code: #{e.errno}"
       puts "Error message: #{e.error}"
       puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")
+      exit
     end
   end
       
