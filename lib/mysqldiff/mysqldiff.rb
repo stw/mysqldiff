@@ -12,12 +12,13 @@ require 'mysql'
 class MySQLDiff
   
   def initialize(db1, db2)
+    @debug      = false
     @columns    = {}
     @db1_output = ""
     @db2_output = ""
     
     if (db1 == db2)
-      puts "Error: No need to compare a database to itself."
+      $stderr.puts "Error: No need to compare a database to itself."
       return
     end
     
@@ -61,7 +62,7 @@ class MySQLDiff
       args[:password] ||= ''
       
       db = Mysql.connect(args[:host], args[:user], args[:password], args[:name], args[:port])
-      puts "-- #{args[:host]} #{args[:name]} server version: " + db.get_server_info
+      @debug and puts "-- #{args[:host]} #{args[:name]} server version: " + db.get_server_info
       return db
     rescue Mysql::Error => e
       $stderr.puts "Error code: #{e.errno}"
