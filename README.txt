@@ -8,16 +8,26 @@ Make a mysql script that makes two databases consistent
 
 == FEATURES/PROBLEMS:
 
-* This is alpha software, do not use in production
+* THIS IS ALPHA SOFTWARE!!! Do not use in production.
 
 == SYNOPSIS:
 
   mysqldiff db1 db2
+  
+  In theory you should be able to run:
+  mysqldiff db1 db2 | mysql
+  
+  To make the databases consistent
 
 == REQUIREMENTS:
 
 * rubygems
 * mysql
+
+For testing:
+* rspec
+* bones 
+* bones-extras
 
 == INSTALL:
 

@@ -15,18 +15,26 @@ class MySQLDiff
     @columns    = {}
     @db1_output = ""
     @db2_output = ""
-
-    run(db1, db2)
+    
+    if (db1 == db2)
+      puts "Error: No need to compare a database to itself."
+      return
+    end
+    
+    @db1 = db1
+    @db2 = db2
   end
   
-  def run(db1, db2)
+  def run
+    return if ((!@db1)||(!@db2))
+    
     date = Time.now
     puts "-- MySQL Diff created with mysqldiff - #{date}"
     puts "-- http://www.walkertek.com"
     puts "-- Steve Walker <swalker@walkertek.com>\n\n"
     
-    @db1 = connect(db1)
-    @db2 = connect(db2)
+    @db1 = connect(@db1)
+    @db2 = connect(@db2)
     
     puts "\n"
     
@@ -56,9 +64,9 @@ class MySQLDiff
       puts "-- #{args[:host]} #{args[:name]} server version: " + db.get_server_info
       return db
     rescue Mysql::Error => e
-      puts "Error code: #{e.errno}"
-      puts "Error message: #{e.error}"
-      puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")
+      $stderr.puts "Error code: #{e.errno}"
+      $stderr.puts "Error message: #{e.error}"
+      $stderr.puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")
       exit
     end
   end
@@ -71,9 +79,9 @@ class MySQLDiff
     begin
       db.query("LOCK #{table}")
     rescue Mysql::Error => e
-      puts "Error code: #{e.errno}"
-      puts "Error message: #{e.error}"
-      puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")
+      $stderr.puts "Error code: #{e.errno}"
+      $stderr.puts "Error message: #{e.error}"
+      $stderr.puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")
       exit
     end
   end
@@ -82,9 +90,9 @@ class MySQLDiff
     begin
       db.query("UNLOCK #{table}")
     rescue Mysql::Error => e
-      puts "Error code: #{e.errno}"
-      puts "Error message: #{e.error}"
-      puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")
+      $stderr.puts "Error code: #{e.errno}"
+      $stderr.puts "Error message: #{e.error}"
+      $stderr.puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")
       exit
     end
   end
@@ -97,9 +105,9 @@ class MySQLDiff
       result = db.query(query)
       return (type == "hash" ? result.to_hash : result.to_array)
     rescue Mysql::Error => e
-      puts "Error code: #{e.errno}"
-      puts "Error message: #{e.error}"
-      puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")
+      $stderr.puts "Error code: #{e.errno}"
+      $stderr.puts "Error message: #{e.error}"
+      $stderr.puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")
       exit
     end
   end

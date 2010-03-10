@@ -30,4 +30,5 @@ print "-- DB2 #{db2.class}: "
 p db2
 puts
 
-MySQLDiff.new(db1, db2)
+mysqldiff = MySQLDiff.new(db1, db2)
+mysqldiff.run
